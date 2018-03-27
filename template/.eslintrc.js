@@ -69,6 +69,10 @@ module.exports = {
     }],
     {{/if_eq}}
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'indent': [2, 4, { 'SwitchCase': 1 }],
+    'space-before-function-paren': [2, {'anonymous': 'never', 'named': 'never', 'asyncArrow': 'always'}],
+    // 'eol-last': [2, 'never'],
+    'semi': [0]
   }
 }

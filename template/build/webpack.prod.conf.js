@@ -37,7 +37,21 @@ const webpackConfig = merge(baseWebpackConfig, {
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
-          warnings: false
+          warnings: false,
+          // drop_console: true,
+          // 内嵌定义了但是只用到一次的变量
+          collapse_vars: true,
+          // 提取出出现多次但是没有定义成变量去引用的静态值
+          reduce_vars: true
+        },
+        output: {
+          // 最紧凑的输出
+          beautify: false,
+          // 删除所有的注释
+          comments: false
+        },
+        mangle: {
+          safari10: true
         }
       },
       sourceMap: config.build.productionSourceMap,
@@ -67,6 +81,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         ? 'index.html'
         : {{/if_or}}config.build.index,
       template: 'index.html',
+      chunks: ['manifest', 'vendor', 'app'],
       inject: true,
       minify: {
         removeComments: true,
@@ -78,6 +93,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
+    ...utils.htmlPlugin(),
     // keep module.id stable when vendor modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting
@@ -106,7 +122,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // in a separate chunk, similar to the vendor chunk
     // see: https://webpack.js.org/plugins/commons-chunk-plugin/#extra-async-commons-chunk
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'app',
+      names: Object.keys(utils.entries()),
       async: 'vendor-async',
       children: true,
       minChunks: 3

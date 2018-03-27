@@ -21,9 +21,7 @@ function resolve (dir) {
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: {
-    app: './src/main.js'
-  },
+  entry: utils.entries(),
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -33,6 +31,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
+    mainFields: ['jsnext:main', 'browser', 'main'],
     alias: {
       {{#if_eq build "standalone"}}
       'vue$': 'vue/dist/vue.esm.js',

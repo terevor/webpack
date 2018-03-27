@@ -74,6 +74,21 @@ module.exports = {
       type: 'confirm',
       message: 'Install vue-router?',
     },
+    vuex: {
+      when: 'isNotTest',
+      type: 'confirm',
+      message: 'Install vuex?',
+    },
+    mobile: {
+      when: 'isNotTest',
+      type: 'confirm',
+      message: '适配移动端?',
+    },
+    gulp: {
+      when: 'isNotTest',
+      type: 'confirm',
+      message: '添加gulp作为打包上传工具?',
+    },
     lint: {
       when: 'isNotTest',
       type: 'confirm',
@@ -112,14 +127,14 @@ module.exports = {
       message: 'Pick a test runner',
       choices: [
         {
-          name: 'Jest',
-          value: 'jest',
-          short: 'jest',
-        },
-        {
           name: 'Karma and Mocha',
           value: 'karma',
           short: 'karma',
+        },
+        {
+          name: 'Jest',
+          value: 'jest',
+          short: 'jest',
         },
         {
           name: 'none (configure it yourself)',
@@ -170,6 +185,10 @@ module.exports = {
     'test/unit/setup.js': "unit && runner === 'jest'",
     'test/e2e/**/*': 'e2e',
     'src/router/**/*': 'router',
+    'src/store/**/*': 'vuex',
+    'gulp*.js': 'gulp',
+    'plugins/bridge/*.js': 'mobile',
+    'services/mock.js': 'mobile',
   },
   complete: function(data, { chalk }) {
     const green = chalk.green

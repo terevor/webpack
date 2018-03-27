@@ -31,7 +31,18 @@ exports.cssLoaders = function (options) {
 
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
-    const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+    const loaders = [cssLoader]
+    {{#mobile}}
+    loaders.push({
+      loader: 'px2rem-loader',
+      options: {
+        remUnit: 37.5
+      }
+    })
+    {{/mobile}}
+    if (options.usePostCSS) {
+      loaders.push(postcssLoader)
+    }
 
     if (loader) {
       loaders.push({
@@ -98,4 +109,72 @@ exports.createNotifierCallback = () => {
       icon: path.join(__dirname, 'logo.png')
     })
   }
+}
+
+const glob = require('glob')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const PAGE_PATH = path.resolve(__dirname, '../src/pages')
+const merge = require('webpack-merge')
+
+const getFolderAndFile = function(path) {
+  const pattern = /pages\/(.*)\/(.*)\.(.*)$/
+  pattern.exec(path)
+  return {
+    folder: RegExp.$1,
+    filename: RegExp.$2
+  }
+}
+
+let entriesMap // 多页面入口配置
+let htmlPluginList // 多页面输出HtmlWebpackPlugin配置
+
+// 读取pages所有子文件夹下的js文件
+exports.entries = function() {
+  if (entriesMap) {
+    return entriesMap
+  }
+  const entryFiles = glob.sync(PAGE_PATH + '/*/*.js')
+  entriesMap = entryFiles.reduce((m, path) => {
+    const { filename } = getFolderAndFile(path)
+    if (filename !== undefined) {
+      m[filename] = path
+    }
+    return m
+  }, {
+    app: path.resolve(__dirname, '../src/main.js')
+  })
+  return entriesMap
+}
+
+// 读取pages所有子文件夹下的html文件
+exports.htmlPlugin = function() {
+  if (htmlPluginList) {
+    return htmlPluginList
+  }
+  const entryHtml = glob.sync(PAGE_PATH + '/*/*.html')
+  htmlPluginList = entryHtml.reduce((arr, path) => {
+    const { filename } = getFolderAndFile(path)
+    if (filename !== undefined) {
+      let conf = {
+        template: path,
+        filename: filename + '.html',
+        // Filtering Chunks
+        chunks: ['manifest', 'vendor', filename],
+        inject: true
+      }
+      if (process.env.NODE_ENV === 'production') {
+        conf = merge(conf, {
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeAttributeQuotes: true
+            },
+            chunksSortMode: 'dependency'
+        })
+      }
+      return arr.concat(new HtmlWebpackPlugin(conf))
+    }
+    return arr
+  }, [])
+  return htmlPluginList
 }

@@ -11,6 +11,7 @@ yarn-error.log*
 /test/e2e/reports/
 selenium-debug.log
 {{/e2e}}
+package-lock.json
 
 # Editor directories and files
 .idea
