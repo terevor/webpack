@@ -19,12 +19,11 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
     response => {
-        const { config } = response
         return response
     },
     error => {
         if (error.response) {
-            const { config, status } = error.response
+            const { status } = error.response
             switch (status) {
                 // case 401:
                 //     // 401 清除token信息并跳转到登录页面

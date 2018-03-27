@@ -14,16 +14,20 @@ import * as filters from './filters'
 import components from './components'
 
 {{#mobile}}
-import { bridge } from './plugins'
 import 'lib-flexible'
 import 'flex.css'
+import { bridge } from './plugins'
 import FastClick from 'fastclick'
-FastClick.attach(document.body)
-Vue.use(bridge)
 {{/mobile}}
+
 import './assets/styles/index.scss'
 
 Vue.config.productionTip = false
+
+{{#mobile}}
+FastClick.attach(document.body)
+Vue.use(bridge)
+{{/mobile}}
 
 Object.keys(components).forEach((key) => { // 注册公共组件，组件名首字母大写后以v开头，使用时<v-xxx></v-xxx>
     const name = key.replace(/(\w)/, (v) => v.toUpperCase())
