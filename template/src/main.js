@@ -16,9 +16,10 @@ import components from './components'
 {{#mobile}}
 import 'lib-flexible'
 import 'flex.css'
-import { bridge } from './plugins'
 import FastClick from 'fastclick'
 {{/mobile}}
+
+import { axios{{#if_eq mobileConfig "bridge"}}, bridge{{/if_eq}}{{#if_eq mobileConfig "wxsdk"}}, wechat{{/if_eq}} } from './plugins'
 
 import './assets/styles/index.scss'
 
@@ -26,8 +27,14 @@ Vue.config.productionTip = false
 
 {{#mobile}}
 FastClick.attach(document.body)
-Vue.use(bridge)
 {{/mobile}}
+Vue.use(axios)
+{{#if_eq mobileConfig "bridge"}}
+Vue.use(bridge)
+{{/if_eq}}
+{{#if_eq mobileConfig "wxsdk"}}
+Vue.use(wechat)
+{{/if_eq}}
 
 Object.keys(components).forEach((key) => { // 注册公共组件，组件名首字母大写后以v开头，使用时<v-xxx></v-xxx>
     const name = key.replace(/(\w)/, (v) => v.toUpperCase())

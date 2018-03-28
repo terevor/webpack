@@ -1,15 +1,15 @@
 <template>
-    <div class="ab-content">
+    <div class="abs-content">
         <slot></slot>
     </div>
 </template>
 <script>
 export default {
-    name: 'content'
+    name: 'vContent'
 }
 </script>
 <style scoped>
-.ab-content {
+.abs-content {
     overflow: auto;
     position: absolute;
     top: 0;

@@ -31,7 +31,8 @@
     "lib-flexible": "^0.3.2",{{/mobile}}
     "vue": "^2.5.2"{{#router}},
     "vue-router": "^3.0.1"{{/router}}{{#vuex}},
-    "vuex": "^3.0.1"{{/vuex}}
+    "vuex": "^3.0.1"{{/vuex}}{{#if_eq mobileConfig "wxsdk"}},
+    "weixin-js-sdk": "^1.3.2"{{/if_eq}}
   },
   "devDependencies": {
     {{#lint}}

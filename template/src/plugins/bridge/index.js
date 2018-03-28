@@ -1,10 +1,13 @@
-import { bus } from '@/services/utils'
+import {
+    bus
+} from '@/services/utils'
 import mock from '@/services/mock'
 
 // 是否开启调试模式
 const isDebug = false
 // 与app嵌入联调时，isMock设为false，开发浏览器调试时设为true
 const isMock = false
+
 const ua = navigator.userAgent
 const isAndroid = ua.indexOf('Android') > -1
 const isIOS = Boolean(
@@ -16,6 +19,9 @@ let iosVersion = ''
 if (iphone && iphone[2]) {
     iosVersion = iphone[2].replace(/_/g, '.')
 }
+
+const isWechat = /micromessenger/i.test(ua)
+const isAlipay = /alipayclient/i.test(ua)
 
 if (isDebug && !isMock) {
     console.log = function(s) {
@@ -29,6 +35,8 @@ const bridge = {
     isIOS,
     iosVersion,
     isAndroid,
+    isWechat,
+    isAlipay,
     isMock,
     connect(callback) {
         if (process.env.NODE_ENV === 'development' && isMock) {

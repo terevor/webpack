@@ -81,7 +81,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         ? 'index.html'
         : {{/if_or}}config.build.index,
       template: 'index.html',
-      chunks: ['manifest', 'vendor', 'app'],
+      excludeChunks: Object.keys(utils.entries()),
       inject: true,
       minify: {
         removeComments: true,
@@ -122,7 +122,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // in a separate chunk, similar to the vendor chunk
     // see: https://webpack.js.org/plugins/commons-chunk-plugin/#extra-async-commons-chunk
     new webpack.optimize.CommonsChunkPlugin({
-      names: Object.keys(utils.entries()),
+      name: 'app',
       async: 'vendor-async',
       children: true,
       minChunks: 3

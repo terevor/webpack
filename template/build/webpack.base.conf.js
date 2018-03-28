@@ -3,6 +3,7 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const merge = require('webpack-merge')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -21,7 +22,9 @@ function resolve (dir) {
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: utils.entries(),
+  entry: merge({
+    app: path.resolve(__dirname, '../src/main.js')
+  }, utils.entries()),
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',

@@ -140,9 +140,7 @@ exports.entries = function() {
       m[filename] = path
     }
     return m
-  }, {
-    app: path.resolve(__dirname, '../src/main.js')
-  })
+  }, {})
   return entriesMap
 }
 
