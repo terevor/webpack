@@ -203,9 +203,9 @@ module.exports = {
         'src/router/_import_testing.js': 'router && (unit || e2e)',
         'src/store/**/*': 'vuex',
         'gulp*.js': 'gulp',
-        'plugins/bridge/*.js': "mobile && mobileConfig === 'bridge'",
-        'services/mock.js': "mobile && mobileConfig === 'bridge'",
-        'plugins/wechat/*.js': "mobile && mobileConfig === 'wxsdk'"
+        'src/plugins/bridge/*.js': "mobile && mobileConfig === 'bridge'",
+        'src/services/mock.js': "mobile && mobileConfig === 'bridge'",
+        'src/plugins/wechat/*.js': "mobile && mobileConfig === 'wxsdk'"
     },
     complete: function(data, { chalk }) {
         const green = chalk.green
