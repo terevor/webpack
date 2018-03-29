@@ -1,5 +1,14 @@
 # vue-webpack-boilerplate
 
+Forked from [vuejs-templates/webpack](https://github.com/vuejs-templates/webpack)
+
+- custom featrues with choices:
+  - vuex
+  - mobile pages support: fastclick/flex.css/lib-flexible/px2rem-loader
+  - JsBridge plugin
+  - weixin-js-sdk plugin
+  - gulp tools for packing and uploading to remote server via SSH
+
 ## Screenshots
 
 ![record](https://github.com/terevor/webpack/blob/master/docs/record.gif)
@@ -19,7 +28,7 @@ This is a project template for [vue-cli](https://github.com/vuejs/vue-cli). **It
 
 ``` bash
 $ npm install -g vue-cli
-$ vue init webpack my-project
+$ vue init terevor/webpack my-project
 $ cd my-project
 $ npm install
 $ npm run dev
@@ -60,11 +69,3 @@ The development server will run on port 8080 by default. If that port is already
   - Works with one command out of the box:
     - Selenium and chromedriver dependencies automatically handled.
     - Automatically spawns the Selenium server.
-
-### Fork It And Make Your Own
-
-You can fork this repo to create your own boilerplate, and use it with `vue-cli`:
-
-``` bash
-vue init username/repo my-project
-```
